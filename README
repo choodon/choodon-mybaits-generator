@@ -1,0 +1,2 @@
+use mvn clean package to generator choodon-mybaits-generator.jar
+java -jar choodon-mybaits-generator.jar -configfile configfile.xml -overwrite
