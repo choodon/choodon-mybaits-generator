@@ -1,0 +1,1 @@
+java -jar choodon-mybaits-generator.jar -configfile generatorConfig.xml -overwrite

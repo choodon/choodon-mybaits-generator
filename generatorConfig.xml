@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <!--http://www.mybatis.org/generator/configreference/xmlconfig.html-->
+    <!--classPathEntry 标签最常见的用法是通过属性 location 指定驱动的路径-->
+    <!--<classPathEntry location="/Program Files/IBM/SQLLIB/java/db2java.zip"/>-->
+    <!--defaultModelType ：这个属性很重要，定义了 MBG 如何生成实体类。-->
+    <!--1.conditional ： 默认值，和下面的 hierarchical 类似，如果一个表的主键只有一个字段，那么不会为该字段生成单独的实体类，而是会将该字段合并到基本实体类中。-->
+    <!--2.flat ：该模型只为每张表生成一个实体类。这个实体类包含表中的所有字段 。 这种模型最简单，推荐使用。-->
+    <!--3.hierarchical ：如果表有主键，那么该模型会产生一个单独的主键实体类，如果表还有 BLOB 字段，则会为表生成一个包含所有 BLOB 字段的单独的实体类，然后为所有其他的字段另外生成一个单独的实体类。 MBG会在所有生成的实体类之间维护一个继承关系。-->
+    <!--targetRuntime ：此属性用于指定生成的代码的运行时环境。-->
+    <!--1. MyBatis3 ： 默认值。-->
+    <!--2. MyBatis3Simple ： 这种情况不会生成与Example相关的方法 。-->
+    <!--introspectedColumnimpl ： 该参数可以指定扩展 org.mybaits.generator.api.IntrospectedColumn 类的实现类。-->
+    <context id="mysql" targetRuntime="MyBatis3">
+
+        <!--<property name="autoDelimitKeywords" value="true"/>-->
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>
+        <property name="javaFileEncoding" value="UTF-8"/>
+
+        <!--<property name="javaFormatter" value=""/>-->
+        <!--<property name="xmlFormatter" value=""/>-->
+        <!--pulugin 配置 http://www.mybatis.org/generator/reference/plugins.html-->
+        <!--用于重写配置Mapper.xml文件，当配置所有注释失效的时候。-->
+        <plugin type="org.mybatis.generator.plugins.UnmergeableXmlMappersPlugin"/>
+        <!--用于生成equals，hashCode方法-->
+        <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin">
+            <!--是否调用父类-->
+            <property name="useEqualsHashCodeFromRoot" value="true"/>
+        </plugin>
+        <!--用于生成toString方法-->
+        <plugin type="org.mybatis.generator.plugins.ToStringPlugin">
+            <!--是否调用父类-->
+            <property name="useToStringFromRoot" value="true"/>
+        </plugin>
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin">
+            <property name="addGWTInterface" value="false"/>
+            <property name="suppressJavaInterface" value="false"/>
+        </plugin>
+        <!--生成 @Mapper 注解-->
+        <plugin type="org.mybatis.generator.plugins.MapperAnnotationPlugin"/>
+        <!--缓存-->
+        <!--<plugin type="org.mybatis.generator.plugins.CachePlugin">-->
+        <!--<property name="cache_eviction" value="LRU"/>-->
+        <!--<property name="cache_flushInterval" value="1"/>-->
+        <!--<property name="cache_size" value="1024"/>-->
+        <!--<property name="cache_readOnly" value="false"/>-->
+        <!--<property name="cache_type" value="false"/>-->
+        <!--</plugin>-->
+
+        <!--关于注释的生成处理-->
+        <commentGenerator type="com.choodon.mybaits.generator.comment.ChoodonCommentGenerator">
+            <!--<commentGenerator>-->
+            <!--阻止生成注释-->
+            <property name="suppressAllComments" value="false"/>
+            <!--阻止生成的注释带时间-->
+            <property name="suppressDate" value="false"/>
+            <!--阻止使用添加表和字段的备注信息-->
+            <property name="addRemarkComments" value="false"/>
+            <!--时间格式-->
+            <property name="dateFormat" value="yyyy-mm-dd hh:MM:ss"/>
+        </commentGenerator>
+
+
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
+                        connectionURL="jdbc:mysql://godcin.com:3306/choodon?nullCatalogMeansCurrent=true"
+                        userId="xx"
+                        password="xx">
+        </jdbcConnection>
+
+        <javaTypeResolver>
+            <!--可以控制是否强制将 DECIMAL 和 NUMERIC 类型的 JDBC 字段转换为 Java 类型的java.math.BigDecimal ，默认值为 false默认情况下的转换规则如下 -->
+            <!--• 如果精度＞O 或者长度＞ 18 ，就使用 java.math.BigDecimal 。-->
+            <!--. 如果精度＝O 并且 10＜＝长度＜＝ 18 ，就使用 java.lang.Long-->
+            <!--• 如果精度＝O 并且 5＜＝长度＜＝9，就使用 java.lang.Integer-->
+            <!--. 如果精度＝O 并且长度＜5 ，就使用 java.lang.Short-->
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <javaModelGenerator targetPackage="com.choodon.mybaits.generator.model" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <sqlMapGenerator targetPackage="mybaits" targetProject="src/main/resources">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.choodon.mybaits.generator.dao"
+                             targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+        <table tableName="t_user" domainObjectName="User">
+            <generatedKey column="id" sqlStatement="SMySql"/>
+        </table>
+
+    </context>
+</generatorConfiguration>
