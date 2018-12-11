@@ -69,7 +69,10 @@
         <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
                         connectionURL="jdbc:mysql://godcin.com:3306/choodon?nullCatalogMeansCurrent=true"
                         userId="xx"
-                        password="xx">
+                        password="xxx">
+            <!--获取表信息-->
+            <!--mysql的connectionURL中添加 useInformationSchema=true-->
+            <property name="useInformationSchema" value="true"></property>
         </jdbcConnection>
 
         <javaTypeResolver>
